@@ -19,83 +19,91 @@ public class ProductInventoryTests
     public void Test_AddProduct_ProductAddedToInventory()
     {
         // Arrange
-        ProductInventory product = new ProductInventory();
-        string name = "apple";
-        double price = 1.00;
-        int quantity = 3;
+        string productName = "apple";
+        double productPrice = 2.50;
+        int productQuantity = 4;
 
-        string expected = $"Product Inventory:{Environment.NewLine}apple - Price: $1.00 - Quantity: 3";
+        string expectedOutput = $"Product Inventory:{Environment.NewLine}{productName} - Price: ${productPrice:f2} - Quantity: {productQuantity}";
 
         // Act
-        this._inventory.AddProduct(name, price, quantity);
+        this._inventory.AddProduct(productName, productPrice, productQuantity);
+
         string result = this._inventory.DisplayInventory();
 
         // Assert
-        Assert.That(result, Is.EqualTo(expected));
+        Assert.That(result, Is.EqualTo(expectedOutput));
+
     }
 
     [Test]
     public void Test_DisplayInventory_NoProducts_ReturnsEmptyString()
     {
         // Arrange
-        ProductInventory product = new ProductInventory();
-
-        string expected = "Product Inventory:";
+        string expectedOutput = "Product Inventory:";
 
         // Act
         string result = this._inventory.DisplayInventory();
 
         // Assert
-        Assert.That(result, Is.EqualTo(expected));
+        Assert.That(result, Is.EqualTo(expectedOutput));
     }
 
     [Test]
     public void Test_DisplayInventory_WithProducts_ReturnsFormattedInventory()
     {
         // Arrange
-        ProductInventory product = new ProductInventory();
-        string name = "apple";
-        double price = 1.222222222;
-        int quantity = 3;
+        string firstProductName = "apple";
+        double firstProductPrice = 2.50;
+        int firstProductQuantity = 4;
 
-        string expected = $"Product Inventory:{Environment.NewLine}apple - Price: $1.22 - Quantity: 3";
+        string secondProductName = "banana";
+        double secondProductPrice = 3.00;
+        int secondProductQuantity = 3;
+
+        string expectedOutput = $"Product Inventory:{Environment.NewLine}{firstProductName} - Price: ${firstProductPrice:f2} - Quantity: {firstProductQuantity}{Environment.NewLine}{secondProductName} - Price: ${secondProductPrice:f2} - Quantity: {secondProductQuantity}";
 
         // Act
-        this._inventory.AddProduct(name, price, quantity);
+        this._inventory.AddProduct(firstProductName, firstProductPrice, firstProductQuantity);
+        this._inventory.AddProduct(secondProductName, secondProductPrice, secondProductQuantity);
+
         string result = this._inventory.DisplayInventory();
 
         // Assert
-        Assert.That(result, Is.EqualTo(expected));
+        Assert.That (result, Is.EqualTo(expectedOutput));
+
     }
 
     [Test]
     public void Test_CalculateTotalValue_NoProducts_ReturnsZero()
     {
         // Arrange
-        ProductInventory product = new ProductInventory();
 
         // Act
         double result = this._inventory.CalculateTotalValue();
 
         // Assert
-        Assert.That(result, Is.EqualTo(0));
+        Assert.That(result, Is.Zero);
     }
 
     [Test]
     public void Test_CalculateTotalValue_WithProducts_ReturnsTotalValue()
     {
         // Arrange
-        ProductInventory product = new ProductInventory();
-        string name = "apple";
-        double price = 1.20;
-        int quantity = 3;
+        string firstProductName = "apple";
+        double firstProductPrice = 2.50;
+        int firstProductQuantity = 4;
+
+        string secondProductName = "banana";
+        double secondProductPrice = 3.00;
+        int secondProductQuantity = 5;
 
         // Act
-        this._inventory.AddProduct(name, price, quantity);
+        this._inventory.AddProduct(firstProductName, firstProductPrice, firstProductQuantity);
+        this._inventory.AddProduct(secondProductName, secondProductPrice, secondProductQuantity);
+
         double result = this._inventory.CalculateTotalValue();
 
         // Assert
-        Assert.That(result , Is.EqualTo(3.5999999999999996d));
-
+        Assert.That(result, Is.EqualTo(25));
     }
 }
